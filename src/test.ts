@@ -9,7 +9,7 @@ declare const require: {
   context(
     path: string,
     deep?: boolean,
-    filter?: RegExp
+    filter?: RegExp,
   ): {
     keys(): string[];
     <T>(id: string): T;
@@ -18,7 +18,7 @@ declare const require: {
 
 getTestBed().initTestEnvironment(
   BrowserDynamicTestingModule,
-  platformBrowserDynamicTesting()
+  platformBrowserDynamicTesting(),
 );
 
 const context = require.context('./', true, /\.spec\.ts$/);
