@@ -3,4 +3,3 @@
 /.vscode
 .env
 /src/environments/environment*
-set-env.js
