@@ -1,6 +1,7 @@
 import { ProductService } from './../../product.service';
 import { CategoryService } from './../../category.service';
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-product-form',
@@ -8,16 +9,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductFormComponent implements OnInit {
   categories$;
+  productForm: FormGroup;
+
   constructor(
     categoryService: CategoryService,
     private productService: ProductService,
+    private formBuilder: FormBuilder,
   ) {
     this.categories$ = categoryService.getCategories().snapshotChanges();
   }
 
-  save(product) {
-    this.productService.create(product);
+  get formControls() {
+    return this.productForm.controls;
   }
 
-  ngOnInit(): void {}
+  save() {
+    this.productService.create(this.productForm.value);
+  }
+
+  ngOnInit() {
+    this.productForm = this.formBuilder.group({
+      title: ['', [Validators.required]],
+      price: ['', [Validators.required, Validators.min(0)]],
+      category: ['', Validators.required],
+      imageUrl: ['', Validators.required],
+    });
+  }
 }
