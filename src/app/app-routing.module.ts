@@ -11,6 +11,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { CheckOutComponent } from './check-out/check-out.component';
 import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.component';
 import { AuthGuard } from './auth-guard.service';
+import { ProductFormComponent } from './admin/product-form/product-form.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -29,6 +30,11 @@ const routes: Routes = [
   {
     path: 'admin/products',
     component: AdminProductsComponent,
+    canActivate: [AuthGuard, AdminAuthGuard],
+  },
+  {
+    path: 'admin/products/new',
+    component: ProductFormComponent,
     canActivate: [AuthGuard, AdminAuthGuard],
   },
   {
