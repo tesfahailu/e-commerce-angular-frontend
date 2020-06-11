@@ -9,11 +9,8 @@
           type="text"
           class="form-control"
         />
-        <div
-          class="alert alert-danger"
-          *ngIf="formControls.title.touched && formControls.title.invalid"
-        >
-          <div *ngIf="formControls.title.errors.required">
+        <div class="alert alert-danger" *ngIf="title.touched && title.invalid">
+          <div *ngIf="title.errors.required">
             Title is required
           </div>
         </div>
@@ -29,14 +26,11 @@
             class="form-control"
           />
         </div>
-        <div
-          class="alert alert-danger"
-          *ngIf="formControls.price.touched && formControls.price.invalid"
-        >
-          <div *ngIf="formControls.price.errors.required">
+        <div class="alert alert-danger" *ngIf="price.touched && price.invalid">
+          <div *ngIf="price.errors.required">
             Price is required.
           </div>
-          <div *ngIf="formControls.price.errors.min">
+          <div *ngIf="price.errors.min">
             Price should be 0 or higher.
           </div>
         </div>
@@ -51,9 +45,9 @@
         </select>
         <div
           class="alert alert-danger"
-          *ngIf="formControls.category.touched && formControls.category.invalid"
+          *ngIf="category.touched && category.invalid"
         >
-          <div *ngIf="formControls.category.errors.required">
+          <div *ngIf="category.errors.required">
             Category is required.
           </div>
         </div>
@@ -69,12 +63,12 @@
         />
         <div
           class="alert alert-danger"
-          *ngIf="formControls.imageUrl.touched && formControls.imageUrl.invalid"
+          *ngIf="imageUrl.touched && imageUrl.invalid"
         >
-          <div *ngIf="formControls.imageUrl.errors.required">
+          <div *ngIf="imageUrl.errors.required">
             Image URL is required.
           </div>
-          <div *ngIf="formControls.imageUrl.errors.pattern">
+          <div *ngIf="imageUrl.errors.pattern">
             Please enter a valid URL.
           </div>
         </div>
@@ -86,11 +80,11 @@
   </div>
   <div class="col-md-6">
     <div class="card" style="width: 20rem;">
-      <img [src]="formControls.imageUrl.value" class="card-img-top" />
+      <img [src]="imageUrl.value" class="card-img-top" *ngIf="imageUrl" />
       <div class="card-body">
-        <h5 class="card-title">{{ formControls.title.value }}</h5>
+        <h5 class="card-title">{{ title.value }}</h5>
         <p class="card-text">
-          {{ formControls.price.value | currency: 'USD':true }}
+          {{ price.value | currency: 'USD' }}
         </p>
       </div>
     </div>
