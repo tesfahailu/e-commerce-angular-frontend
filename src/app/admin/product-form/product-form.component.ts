@@ -2,6 +2,7 @@ import { ProductService } from './../../product.service';
 import { CategoryService } from './../../category.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-form',
@@ -12,7 +13,8 @@ export class ProductFormComponent implements OnInit {
   productForm: FormGroup;
 
   constructor(
-    categoryService: CategoryService,
+    private router: Router,
+    private categoryService: CategoryService,
     private productService: ProductService,
     private formBuilder: FormBuilder,
   ) {
@@ -25,6 +27,7 @@ export class ProductFormComponent implements OnInit {
 
   save() {
     this.productService.create(this.productForm.value);
+    this.router.navigate(['/admin/products']);
   }
 
   ngOnInit() {
