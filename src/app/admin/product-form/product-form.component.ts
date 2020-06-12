@@ -14,6 +14,7 @@ export class ProductFormComponent implements OnInit {
   categories$;
   productForm: FormGroup;
   product = {};
+  id;
 
   constructor(
     private router: Router,
@@ -39,7 +40,9 @@ export class ProductFormComponent implements OnInit {
   }
 
   save() {
-    this.productService.create(this.productForm.value);
+    if (this.id) this.productService.update(this.id, this.productForm.value);
+    else this.productService.create(this.productForm.value);
+
     this.router.navigate(['/admin/products']);
   }
 
@@ -51,10 +54,10 @@ export class ProductFormComponent implements OnInit {
       imageUrl: ['', Validators.required],
     });
 
-    let id = this.route.snapshot.paramMap.get('id');
-    if (id)
+    this.id = this.route.snapshot.paramMap.get('id');
+    if (this.id)
       this.productService
-        .get(id)
+        .get(this.id)
         .pipe(take(1))
         .subscribe((p) => {
           const product: AppProduct = p.payload.val();
