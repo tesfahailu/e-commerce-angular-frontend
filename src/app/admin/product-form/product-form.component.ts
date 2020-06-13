@@ -1,4 +1,4 @@
-import { AppProduct } from './app-product';
+import { Product } from './../../models/product';
 import { ProductService } from './../../product.service';
 import { CategoryService } from './../../category.service';
 import { Component, OnInit } from '@angular/core';
@@ -66,7 +66,7 @@ export class ProductFormComponent implements OnInit {
         .get(this.id)
         .pipe(take(1))
         .subscribe((p) => {
-          const product: AppProduct = p.payload.val();
+          const product: Product = p.payload.val();
           this.title.setValue(product.title);
           this.price.setValue(product.price);
           this.category.setValue(product.category);
