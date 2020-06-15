@@ -1,11 +1,7 @@
 export interface Product {
+  id?: string;
   title?: string;
   price?: number;
   category?: string;
   imageUrl?: string;
-}
-
-export interface ProductData {
-  key: string;
-  data: Product;
 }

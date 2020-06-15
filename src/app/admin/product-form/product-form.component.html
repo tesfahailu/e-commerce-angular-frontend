@@ -1,8 +1,12 @@
 <div class="row">
   <div class="col-md-6">
-    <form [formGroup]="productForm" class="form-wrapper" (ngSubmit)="save()">
+    <form
+      [formGroup]="productForm"
+      class="form-wrapper"
+      (ngSubmit)="saveProduct()"
+    >
       <div class="form-group">
-        <label for="title">Title</label
+        <label for="title">{{ label.TITLE }}</label
         ><input
           formControlName="title"
           id="title"
@@ -11,12 +15,12 @@
         />
         <div class="alert alert-danger" *ngIf="title.touched && title.invalid">
           <div *ngIf="title.errors.required">
-            Title is required
+            {{ error.TITLE_REQUIRED }}
           </div>
         </div>
       </div>
       <div class="form-group">
-        <label for="price">Price</label>
+        <label for="price">{{ label.PRICE }}</label>
         <div class="input-group">
           <span class="input-group-text">$</span>
           <input
@@ -28,19 +32,22 @@
         </div>
         <div class="alert alert-danger" *ngIf="price.touched && price.invalid">
           <div *ngIf="price.errors.required">
-            Price is required.
+            {{ error.PRICE_REQUIRED }}
           </div>
           <div *ngIf="price.errors.min">
-            Price should be 0 or higher.
+            {{ error.PRICE_INVALID }}
           </div>
         </div>
       </div>
       <div class="form-group">
-        <label for="category">Category</label
+        <label for="category">{{ label.CATEGORY }}</label
         ><select formControlName="category" id="category" class="form-control">
           <option value=""></option>
-          <option *ngFor="let c of categories$ | async" [value]="c.key">
-            {{ c.payload.val().name }}
+          <option
+            *ngFor="let category of categoriesObservable | async"
+            [value]="category.id"
+          >
+            {{ category.name }}
           </option>
         </select>
         <div
@@ -48,41 +55,46 @@
           *ngIf="category.touched && category.invalid"
         >
           <div *ngIf="category.errors.required">
-            Category is required.
+            {{ error.CATEGORY_REQUIRED }}
           </div>
         </div>
       </div>
       <div class="form-group">
-        <label for="imageUrl">Image URL</label
+        <label for="imageUrl">{{ label.IMAGE_URL }}</label
         ><input
           formControlName="imageUrl"
           id="imageUrl"
           type="url"
           class="form-control"
-          pattern="https://.*"
+          [pattern]="URL_PATTERN"
         />
         <div
           class="alert alert-danger"
           *ngIf="imageUrl.touched && imageUrl.invalid"
         >
           <div *ngIf="imageUrl.errors.required">
-            Image URL is required.
+            {{ error.IMAGE_URL_REQUIRED }}
           </div>
           <div *ngIf="imageUrl.errors.pattern">
-            Please enter a valid URL.
+            {{ error.IMAGE_URL_INVALID }}
           </div>
         </div>
       </div>
       <button class="btn btn-primary" [disabled]="productForm.invalid">
-        Save
+        {{ saveProductButtonText }}
       </button>
-      <button type="button" (click)="delete()" class="btn btn-danger">
-        Delete
+      <button
+        id="deleteButton"
+        type="button"
+        (click)="deleteProduct()"
+        class="btn btn-danger"
+      >
+        {{ deleteProductButtonText }}
       </button>
     </form>
   </div>
   <div class="col-md-6">
-    <div class="card" style="width: 20rem;">
+    <div id="productCard" class="card">
       <img [src]="imageUrl.value" class="card-img-top" *ngIf="imageUrl" />
       <div class="card-body">
         <h5 class="card-title">{{ title.value }}</h5>

@@ -1,20 +1,50 @@
+import { Category } from './../../models/category';
 import { Product } from './../../models/product';
 import { ProductService } from './../../product.service';
 import { CategoryService } from './../../category.service';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  AbstractControl,
+} from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { take } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+
+enum Label {
+  TITLE = 'Title',
+  PRICE = 'Price',
+  CATEGORY = 'Category',
+  IMAGE_URL = 'Image Url',
+}
+enum Error {
+  TITLE_REQUIRED = 'Title is required.',
+  PRICE_REQUIRED = 'Price is required.',
+  PRICE_INVALID = 'Price should be 0 or higher.',
+  CATEGORY_REQUIRED = 'Category is required.',
+  IMAGE_URL_REQUIRED = 'Image URL is required.',
+  IMAGE_URL_INVALID = 'Please enter a valid URL.',
+}
+const URL_PATTERN = 'https://.*';
+const SAVE_PRODUCT_BUTTON_TEXT = 'Save';
+const DELETE_PRODUCT_BUTTON_TEXT = 'Delete';
 
 @Component({
   selector: 'app-product-form',
   templateUrl: './product-form.component.html',
+  styleUrls: ['./product-form.component.scss'],
 })
 export class ProductFormComponent implements OnInit {
-  categories$;
+  id: string;
+  label: typeof Label = Label;
+  categoriesObservable: Observable<Category[]>;
+  error: typeof Error = Error;
+  product: Product = null;
   productForm: FormGroup;
-  product = {};
-  id;
+  URL_PATTERN: string = URL_PATTERN;
+  saveProductButtonText: string = SAVE_PRODUCT_BUTTON_TEXT;
+  deleteProductButtonText: string = DELETE_PRODUCT_BUTTON_TEXT;
 
   constructor(
     private router: Router,
@@ -23,36 +53,37 @@ export class ProductFormComponent implements OnInit {
     private productService: ProductService,
     private formBuilder: FormBuilder,
   ) {
-    this.categories$ = this.categoryService.getCategories().snapshotChanges();
+    this.categoriesObservable = this.categoryService.getCategoriesObservable();
   }
 
-  get title() {
+  get title(): AbstractControl {
     return this.productForm.get('title');
   }
-  get price() {
+  get price(): AbstractControl {
     return this.productForm.get('price');
   }
-  get category() {
+  get category(): AbstractControl {
     return this.productForm.get('category');
   }
-  get imageUrl() {
+  get imageUrl(): AbstractControl {
     return this.productForm.get('imageUrl');
   }
 
-  save() {
-    if (this.id) this.productService.update(this.id, this.productForm.value);
-    else this.productService.create(this.productForm.value);
+  saveProduct(): void {
+    if (this.id)
+      this.productService.updateProduct(this.id, this.productForm.value);
+    else this.productService.createProduct(this.productForm.value);
 
     this.router.navigate(['/admin/products']);
   }
 
-  delete() {
+  deleteProduct(): void {
     if (!confirm('Are you sure you want to delete this product')) return;
-    this.productService.delete(this.id);
+    this.productService.deleteProduct(this.id);
     this.router.navigate(['/admin/products']);
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.productForm = this.formBuilder.group({
       title: ['', [Validators.required]],
       price: ['', [Validators.required, Validators.min(0)]],
@@ -62,15 +93,11 @@ export class ProductFormComponent implements OnInit {
 
     this.id = this.route.snapshot.paramMap.get('id');
     if (this.id)
-      this.productService
-        .get(this.id)
-        .pipe(take(1))
-        .subscribe((p) => {
-          const product: Product = p.payload.val();
-          this.title.setValue(product.title);
-          this.price.setValue(product.price);
-          this.category.setValue(product.category);
-          this.imageUrl.setValue(product.imageUrl);
-        });
+      this.productService.getProductObservable(this.id).subscribe((product) => {
+        this.title.setValue(product.title);
+        this.price.setValue(product.price);
+        this.category.setValue(product.category);
+        this.imageUrl.setValue(product.imageUrl);
+      });
   }
 }

@@ -1,7 +1,7 @@
 <p>
-  <a routerLink="/admin/products/new" class="btn btn-primary text-white"
-    >New Product</a
-  >
+  <a routerLink="/admin/products/new" class="btn btn-primary text-white">{{
+    addProductButtonText
+  }}</a>
 </p>
 <p>
   <input
@@ -15,17 +15,17 @@
 <table class="table">
   <thead>
     <tr>
-      <th>Title</th>
-      <th>Price</th>
-      <th></th>
+      <th *ngFor="let tableHeader of tableHeaders">{{ tableHeader }}</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let product of filteredProducts">
-      <td>{{ product.data.title }}</td>
-      <td>{{ product.data.price }}</td>
+      <td>{{ product.title }}</td>
+      <td>{{ product.price }}</td>
       <td>
-        <a [routerLink]="['/admin/products/', product.key]">Edit</a>
+        <a [routerLink]="['/admin/products/', product.id]">{{
+          editProductText
+        }}</a>
       </td>
     </tr>
   </tbody>
