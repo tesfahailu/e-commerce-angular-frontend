@@ -94,7 +94,7 @@
     </form>
   </div>
   <div class="col-md-6">
-    <div id="productCard" class="card">
+    <div id="productCard" *ngIf="title" class="card">
       <img [src]="imageUrl.value" class="card-img-top" *ngIf="imageUrl" />
       <div class="card-body">
         <h5 class="card-title">{{ title.value }}</h5>
