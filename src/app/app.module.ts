@@ -17,6 +17,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AdminAuthGuard } from './admin-auth-guard.service';
 import { ProductFormComponent } from './admin/product-form/product-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { PaginatorComponent } from './paginator/paginator.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -24,6 +29,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     BsNavbarComponent,
     AdminProductsComponent,
     ProductFormComponent,
+    PaginatorComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,6 +40,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     NgbModule,
+    NoopAnimationsModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatSortModule,
   ],
   providers: [
     AuthService,
