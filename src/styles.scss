@@ -1,9 +1,22 @@
+@import '~@angular/material/theming';
+@include mat-core();
+$shop-primary: mat-palette($mat-indigo);
+$shop-accent: mat-palette($mat-pink, A200, A100, A400);
+$shop-warn: mat-palette($mat-red);
+$shop-theme: mat-light-theme($shop-primary, $shop-accent, $shop-warn);
+@include angular-material-theme($shop-theme);
 @import '~bootstrap/scss/bootstrap';
-
 * {
   margin: 0;
 }
-
 body {
   padding-top: 80px;
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
