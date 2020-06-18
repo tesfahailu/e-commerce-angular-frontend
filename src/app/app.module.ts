@@ -22,6 +22,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
+import { ProductFilterComponent } from './products/product-filter/product-filter.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { MatSortModule } from '@angular/material/sort';
     AdminProductsComponent,
     ProductFormComponent,
     ProductsComponent,
+    ProductFilterComponent,
   ],
   imports: [
     BrowserModule,
