@@ -1,3 +1,4 @@
+import { ProductsComponent } from './products/products.component';
 import { ProductService } from './product.service';
 import { CategoryService } from './category.service';
 import { AdminProductsComponent } from './admin/admin-products/admin-products.component';
@@ -28,6 +29,7 @@ import { MatSortModule } from '@angular/material/sort';
     BsNavbarComponent,
     AdminProductsComponent,
     ProductFormComponent,
+    ProductsComponent,
   ],
   imports: [
     BrowserModule,
