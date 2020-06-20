@@ -1,10 +1,12 @@
+import { documentToDomainObject } from './util/documentToDomainObject';
 import { Item } from './models/item';
-import { take } from 'rxjs/operators';
+import { take, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireObject } from '@angular/fire/database';
 import { Product } from './models/product';
 import { Cart } from './models/cart';
 import { database } from 'firebase';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -18,9 +20,12 @@ export class ShoppingCartService {
     });
   }
 
-  private getCart(cartId: string): AngularFireObject<Cart> {
-    console.log('Get cart ran');
-    return this.db.object('/shopping-carts/' + cartId);
+  async getCart(): Promise<Observable<Cart>> {
+    let cartId = await this.getOrCreateCartId();
+    return this.db
+      .object('/shopping-carts/' + cartId)
+      .valueChanges()
+      .pipe(map((action) => action as Cart));
   }
 
   private getItem(cartId: string, productId: string): AngularFireObject<Item> {
@@ -39,13 +44,12 @@ export class ShoppingCartService {
     let cartId = await this.getOrCreateCartId();
     let itemObservable = this.getItem(cartId, product.id);
     itemObservable
-      .snapshotChanges()
+      .valueChanges()
       .pipe(take(1))
       .subscribe((item) => {
-        const itemValue = item.payload.val() as Item;
         itemObservable.update({
           product: product,
-          quantity: ((itemValue && itemValue.quantity) || 0) + 1,
+          quantity: ((item && item.quantity) || 0) + 1,
         });
       });
   }
