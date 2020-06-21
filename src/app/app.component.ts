@@ -13,7 +13,7 @@ export class AppComponent {
     private auth: AuthService,
     router: Router,
   ) {
-    auth.user$.subscribe((user) => {
+    auth.userObservable.subscribe((user) => {
       if (!user) return;
       userService.save(user);
       let returnUrl = localStorage.getItem('returnUrl');

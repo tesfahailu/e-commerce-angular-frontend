@@ -1,4 +1,4 @@
-import { Cart } from './../models/cart';
+import { ShoppingCart } from '../models/shopping-cart';
 import { ShoppingCartService } from './../shopping-cart.service';
 import { switchMap } from 'rxjs/operators';
 import { ProductService } from './../product.service';
@@ -15,7 +15,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   products: Product[] = [];
   filteredProducts: Product[];
   paramCategory: string;
-  cart: Cart;
+  cart: ShoppingCart;
   subscription: Subscription;
 
   constructor(

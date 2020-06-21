@@ -11,7 +11,7 @@ import { switchMap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AuthService {
-  user$: Observable<firebase.User>;
+  userObservable: Observable<firebase.User>;
 
   constructor(
     private userService: UserService,
@@ -19,22 +19,22 @@ export class AuthService {
     private route: ActivatedRoute,
     private router: Router,
   ) {
-    this.user$ = afAuth.authState;
+    this.userObservable = afAuth.authState;
   }
 
-  login() {
+  login(): void {
     let returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/';
     this.afAuth
       .signInWithPopup(new firebase.auth.GoogleAuthProvider())
       .then(() => this.router.navigateByUrl(returnUrl));
   }
 
-  logout() {
+  logout(): void {
     this.afAuth.signOut();
   }
 
-  get appUser$(): Observable<AppUser> {
-    return this.user$.pipe(
+  get appUserObservable(): Observable<AppUser> {
+    return this.userObservable.pipe(
       switchMap((user) => {
         if (user) return this.userService.get(user.uid).valueChanges();
         return of(null);
