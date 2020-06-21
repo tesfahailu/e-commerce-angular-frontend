@@ -36,6 +36,7 @@ import { ProductCardComponent } from './product-card/product-card.component';
     ProductsComponent,
     ProductFilterComponent,
     ProductCardComponent,
+    ShoppingCartComponent,
   ],
   imports: [
     BrowserModule,
