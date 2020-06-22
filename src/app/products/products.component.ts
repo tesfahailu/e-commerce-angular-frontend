@@ -5,47 +5,47 @@ import { ProductService } from './../product.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Product } from '../models/product';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
 })
-export class ProductsComponent implements OnInit, OnDestroy {
+export class ProductsComponent implements OnInit {
   products: Product[] = [];
   filteredProducts: Product[];
   paramCategory: string;
-  cart: ShoppingCart;
-  subscription: Subscription;
+  cartObservable: Observable<ShoppingCart>;
 
   constructor(
-    route: ActivatedRoute,
-    productService: ProductService,
+    private route: ActivatedRoute,
+    private productService: ProductService,
     private shoppingCartService: ShoppingCartService,
-  ) {
-    productService
+  ) {}
+
+  async ngOnInit(): Promise<void> {
+    this.cartObservable = await this.shoppingCartService.getCart();
+    this.populateProduct();
+  }
+
+  private populateProduct() {
+    this.productService
       .getProductsObservable()
       .pipe(
         switchMap((products) => {
           this.products = products;
-          return route.queryParamMap;
+          return this.route.queryParamMap;
         }),
       )
       .subscribe((params) => {
         this.paramCategory = params.get('category');
-        this.filteredProducts = this.paramCategory
-          ? this.products.filter((p) => p.category === this.paramCategory)
-          : this.products;
+        this.applyFilter();
       });
   }
 
-  async ngOnInit(): Promise<void> {
-    this.subscription = (await this.shoppingCartService.getCart()).subscribe(
-      (cart) => (this.cart = cart),
-    );
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+  private applyFilter() {
+    this.filteredProducts = this.paramCategory
+      ? this.products.filter((p) => p.category === this.paramCategory)
+      : this.products;
   }
 }
