@@ -23,11 +23,11 @@ export class ShoppingCartService {
   }
 
   async addToCart(product: Product): Promise<void> {
-    this.upateItem(product, 1);
+    this.updateItem(product, 1);
   }
 
   async removeFromCart(product: Product): Promise<void> {
-    this.upateItem(product, -1);
+    this.updateItem(product, -1);
   }
 
   async clearCart() {
@@ -56,19 +56,22 @@ export class ShoppingCartService {
     return result.key;
   }
 
-  private async upateItem(product: Product, change: number): Promise<void> {
+  private async updateItem(product: Product, change: number): Promise<void> {
     let cartId = await this.getOrCreateCartId();
     let itemObservable = this.getItem(cartId, product.id);
     itemObservable
       .valueChanges()
       .pipe(take(1))
       .subscribe((item) => {
-        itemObservable.update({
-          title: product.title,
-          imageUrl: product.imageUrl,
-          price: product.price,
-          quantity: ((item && item.quantity) || 0) + change,
-        });
+        let quantity = ((item && item.quantity) || 0) + change;
+        if (quantity === 0) itemObservable.remove();
+        else
+          itemObservable.update({
+            title: product.title,
+            imageUrl: product.imageUrl,
+            price: product.price,
+            quantity,
+          });
       });
   }
 }
