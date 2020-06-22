@@ -6,6 +6,7 @@ import { ShoppingCart } from '../models/shopping-cart';
 @Component({
   selector: 'shopping-cart',
   templateUrl: './shopping-cart.component.html',
+  styleUrls: ['./shopping-cart.component.scss'],
 })
 export class ShoppingCartComponent implements OnInit {
   cartObservable: Observable<ShoppingCart>;
