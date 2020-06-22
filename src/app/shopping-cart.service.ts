@@ -14,18 +14,31 @@ import { Observable } from 'rxjs';
 export class ShoppingCartService {
   constructor(private db: AngularFireDatabase) {}
 
-  private create(): database.ThenableReference {
-    return this.db.list('/shopping-carts').push({
-      dateCreated: new Date().getTime(),
-    });
-  }
-
   async getCart(): Promise<Observable<any>> {
     let cartId = await this.getOrCreateCartId();
     return this.db
       .object('/shopping-carts/' + cartId)
       .valueChanges()
       .pipe(map((action: any) => new ShoppingCart(action.items)));
+  }
+
+  async addToCart(product: Product): Promise<void> {
+    this.upateItem(product, 1);
+  }
+
+  async removeFromCart(product: Product): Promise<void> {
+    this.upateItem(product, -1);
+  }
+
+  async clearCart() {
+    let cartId = await this.getOrCreateCartId();
+    this.db.object('/shopping-carts/' + cartId + '/items').remove();
+  }
+
+  private create(): database.ThenableReference {
+    return this.db.list('/shopping-carts').push({
+      dateCreated: new Date().getTime(),
+    });
   }
 
   private getItem(
@@ -41,14 +54,6 @@ export class ShoppingCartService {
     let result = await this.create();
     localStorage.setItem('cartId', result.key);
     return result.key;
-  }
-
-  async addToCart(product: Product): Promise<void> {
-    this.upateItem(product, 1);
-  }
-
-  async removeFromCart(product: Product): Promise<void> {
-    this.upateItem(product, -1);
   }
 
   private async upateItem(product: Product, change: number): Promise<void> {
