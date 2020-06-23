@@ -1,3 +1,4 @@
+import { AuthService } from './../auth.service';
 import { OrderService } from './../order.service';
 import { ShoppingCart } from './../models/shopping-cart';
 import { ShoppingCartService } from './../shopping-cart.service';
@@ -35,9 +36,12 @@ export class CheckOutComponent implements OnInit, OnDestroy {
   placeOrderButtonText: string = PLACE_ORDER_BUTTON_TEXT;
   shippingForm: FormGroup;
   cart: ShoppingCart;
-  subscription: Subscription;
+  userId: string;
+  cartSubscription: Subscription;
+  userSubscription: Subscription;
 
   constructor(
+    private authService: AuthService,
     private orderService: OrderService,
     private formBuilder: FormBuilder,
     private shoppingCartService: ShoppingCartService,
@@ -64,15 +68,22 @@ export class CheckOutComponent implements OnInit, OnDestroy {
       city: ['', Validators.required],
     });
     let cartObservable = await this.shoppingCartService.getCart();
-    this.subscription = cartObservable.subscribe((cart) => (this.cart = cart));
+    this.cartSubscription = cartObservable.subscribe(
+      (cart) => (this.cart = cart),
+    );
+    this.authService.userObservable.subscribe(
+      (user) => (this.userId = user.uid),
+    );
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.cartSubscription.unsubscribe();
+    this.userSubscription.unsubscribe();
   }
 
   placeOrder(): void {
     let order = {
+      userId: this.userId,
       datePlaced: new Date().getTime(),
       shipping: { ...this.shippingForm.value },
       items: this.cart.items.map((i) => {
