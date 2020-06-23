@@ -1,3 +1,4 @@
+import { Order } from './../models/order';
 import { AuthService } from './../auth.service';
 import { OrderService } from './../order.service';
 import { ShoppingCart } from './../models/shopping-cart';
@@ -10,6 +11,7 @@ import {
 } from '@angular/forms';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 enum Label {
   NAME = 'Name',
@@ -41,6 +43,7 @@ export class CheckOutComponent implements OnInit, OnDestroy {
   userSubscription: Subscription;
 
   constructor(
+    private router: Router,
     private authService: AuthService,
     private orderService: OrderService,
     private formBuilder: FormBuilder,
@@ -71,7 +74,7 @@ export class CheckOutComponent implements OnInit, OnDestroy {
     this.cartSubscription = cartObservable.subscribe(
       (cart) => (this.cart = cart),
     );
-    this.authService.userObservable.subscribe(
+    this.userSubscription = this.authService.userObservable.subscribe(
       (user) => (this.userId = user.uid),
     );
   }
@@ -81,24 +84,9 @@ export class CheckOutComponent implements OnInit, OnDestroy {
     this.userSubscription.unsubscribe();
   }
 
-  placeOrder(): void {
-    let order = {
-      userId: this.userId,
-      datePlaced: new Date().getTime(),
-      shipping: { ...this.shippingForm.value },
-      items: this.cart.items.map((i) => {
-        return {
-          product: {
-            title: i.title,
-            imageUrl: i.imageUrl,
-            price: i.price,
-          },
-          quantity: i.quantity,
-          totalPrice: i.totalPrice,
-        };
-      }),
-    };
-
-    this.orderService.storeOrder(order);
+  async placeOrder(): Promise<void> {
+    let order = new Order(this.userId, this.shippingForm.value, this.cart);
+    let result = await this.orderService.placeOrder(order);
+    this.router.navigate(['/order-success', result.key]);
   }
 }
