@@ -1,3 +1,4 @@
+import { CheckOutComponent } from './check-out/check-out.component';
 import { ShoppingCartService } from './shopping-cart.service';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 import { ProductsComponent } from './products/products.component';
@@ -33,6 +34,7 @@ import { ProductQuantityComponent } from './product-quantity/product-quantity.co
     AppComponent,
     BsNavbarComponent,
     AdminProductsComponent,
+    CheckOutComponent,
     ProductFormComponent,
     ProductsComponent,
     ProductFilterComponent,
