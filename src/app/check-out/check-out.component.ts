@@ -1,10 +1,14 @@
+import { OrderService } from './../order.service';
+import { ShoppingCart } from './../models/shopping-cart';
+import { ShoppingCartService } from './../shopping-cart.service';
 import {
   FormBuilder,
   Validators,
   FormGroup,
   AbstractControl,
 } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 enum Label {
   NAME = 'Name',
@@ -25,13 +29,19 @@ const PLACE_ORDER_BUTTON_TEXT = 'Place Order';
   selector: 'app-check-out',
   templateUrl: './check-out.component.html',
 })
-export class CheckOutComponent implements OnInit {
+export class CheckOutComponent implements OnInit, OnDestroy {
   label: typeof Label = Label;
   error: typeof Error = Error;
   placeOrderButtonText: string = PLACE_ORDER_BUTTON_TEXT;
   shippingForm: FormGroup;
+  cart: ShoppingCart;
+  subscription: Subscription;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private orderService: OrderService,
+    private formBuilder: FormBuilder,
+    private shoppingCartService: ShoppingCartService,
+  ) {}
 
   get name(): AbstractControl {
     return this.shippingForm.get('name');
@@ -46,14 +56,38 @@ export class CheckOutComponent implements OnInit {
     return this.shippingForm.get('city');
   }
 
-  placeOrder() {}
-
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.shippingForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       addressLine1: ['', Validators.required],
       addressLine2: ['', Validators.required],
       city: ['', Validators.required],
     });
+    let cartObservable = await this.shoppingCartService.getCart();
+    this.subscription = cartObservable.subscribe((cart) => (this.cart = cart));
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  placeOrder(): void {
+    let order = {
+      datePlaced: new Date().getTime(),
+      shipping: { ...this.shippingForm.value },
+      items: this.cart.items.map((i) => {
+        return {
+          product: {
+            title: i.title,
+            imageUrl: i.imageUrl,
+            price: i.price,
+          },
+          quantity: i.quantity,
+          totalPrice: i.totalPrice,
+        };
+      }),
+    };
+
+    this.orderService.storeOrder(order);
   }
 }
