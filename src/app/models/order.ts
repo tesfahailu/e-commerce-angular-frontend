@@ -1,8 +1,27 @@
-export interface Order {
-  userId: string;
+import { ShoppingCart } from './shopping-cart';
+export class Order {
   datePlaced: number;
   items: Item[];
-  shipping: Shipping;
+
+  constructor(
+    public userId: string,
+    public shipping: Shipping,
+    public shoppingCart: ShoppingCart,
+  ) {
+    this.datePlaced = new Date().getTime();
+
+    this.items = shoppingCart.items.map((item) => {
+      return {
+        product: {
+          title: item.title,
+          imageUrl: item.imageUrl,
+          price: item.price,
+        },
+        quantity: item.quantity,
+        totalPrice: item.totalPrice,
+      };
+    });
+  }
 }
 
 interface Item {
