@@ -1,4 +1,5 @@
 export interface Order {
+  userId: string;
   datePlaced: number;
   items: Item[];
   shipping: Shipping;
