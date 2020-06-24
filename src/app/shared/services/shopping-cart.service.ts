@@ -1,12 +1,11 @@
-import { documentToDomainObject } from '../../util/documentToDomainObject';
-import { ShoppingCartItem } from 'shared/models/shopping-cart-item';
-import { take, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireObject } from '@angular/fire/database';
-import { Product } from 'shared/models/product';
-import { ShoppingCart } from 'shared/models/shopping-cart';
 import { database } from 'firebase';
 import { Observable } from 'rxjs';
+import { map, take } from 'rxjs/operators';
+import { Product } from 'shared/models/product';
+import { ShoppingCart } from 'shared/models/shopping-cart';
+import { ShoppingCartItem } from 'shared/models/shopping-cart-item';
 
 @Injectable({
   providedIn: 'root',

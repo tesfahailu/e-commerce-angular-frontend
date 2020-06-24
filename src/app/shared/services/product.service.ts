@@ -1,9 +1,10 @@
-import { documentToDomainObject } from '../../util/documentToDomainObject';
-import { Product } from 'shared/models/product';
-import { map, take } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
+import { Observable } from 'rxjs';
+import { map, take } from 'rxjs/operators';
+import { Product } from 'shared/models/product';
+
+import { documentToDomainObject } from '../../util/documentToDomainObject';
 
 @Injectable({
   providedIn: 'root',

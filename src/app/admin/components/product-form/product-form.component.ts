@@ -1,16 +1,16 @@
-import { Category } from '../../../category';
-import { Product } from 'shared/models/product';
-import { ProductService } from 'shared/services/product.service';
-import { CategoryService } from 'shared/services/category.service';
 import { Component, OnInit } from '@angular/core';
 import {
-  FormGroup,
-  FormBuilder,
-  Validators,
   AbstractControl,
+  FormBuilder,
+  FormGroup,
+  Validators,
 } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { Category } from 'shared/models/category';
+import { Product } from 'shared/models/product';
+import { CategoryService } from 'shared/services/category.service';
+import { ProductService } from 'shared/services/product.service';
 
 enum Label {
   TITLE = 'Title',

@@ -1,9 +1,10 @@
-import { Category } from '../../category';
-import { documentToDomainObject } from '../../util/documentToDomainObject';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Category } from 'shared/models/category';
+
+import { documentToDomainObject } from '../../util/documentToDomainObject';
 
 @Injectable({
   providedIn: 'root',

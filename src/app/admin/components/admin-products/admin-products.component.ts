@@ -1,11 +1,11 @@
-import { TableHeader } from '../../../table-Header';
-import { Product } from 'shared/models/product';
-import { ProductService } from 'shared/services/product.service';
 import { Component, OnDestroy, ViewChild } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { Subscription } from 'rxjs';
+import { Product } from 'shared/models/product';
+import { TableHeader } from 'shared/models/table-Header';
+import { ProductService } from 'shared/services/product.service';
 
 const ADD_PRODUCT_BUTTON_TEXT = 'New Product';
 const TABLE_HEADERS = [

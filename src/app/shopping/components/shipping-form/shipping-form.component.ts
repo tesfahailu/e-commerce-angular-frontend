@@ -1,16 +1,16 @@
-import { ShoppingCart } from 'shared/models/shopping-cart';
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
-import { AuthService } from 'shared/services/auth.service';
-import { OrderService } from 'shared/services/order.service';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormGroup,
-  AbstractControl,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Order } from 'shared/models/order';
+import { ShoppingCart } from 'shared/models/shopping-cart';
+import { AuthService } from 'shared/services/auth.service';
+import { OrderService } from 'shared/services/order.service';
 
 enum Label {
   NAME = 'Name',
