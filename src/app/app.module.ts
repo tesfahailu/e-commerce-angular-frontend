@@ -20,30 +20,22 @@ import { ProductFormComponent } from './admin/components/product-form/product-fo
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BsNavbarComponent } from './bs-navbar/bs-navbar.component';
-import { CheckOutComponent } from './check-out/check-out.component';
-import { MyOrdersComponent } from './my-orders/my-orders.component';
-import { ProductFilterComponent } from './products/product-filter/product-filter.component';
-import { ProductsComponent } from './products/products.component';
-import { ShippingFormComponent } from './shipping-form/shipping-form.component';
-import { ShoppingCartSummaryComponent } from './shopping-cart-summary/shopping-cart-summary.component';
-import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
+import { CheckOutComponent } from './shopping/components/check-out/check-out.component';
+import { MyOrdersComponent } from './shopping/components/my-orders/my-orders.component';
+import { ProductFilterComponent } from './shopping/components/products/product-filter/product-filter.component';
+import { ProductsComponent } from './shopping/components/products/products.component';
+import { ShippingFormComponent } from './shopping/components/shipping-form/shipping-form.component';
+import { ShoppingCartSummaryComponent } from './shopping/components/shopping-cart-summary/shopping-cart-summary.component';
+import { ShoppingCartComponent } from './shopping/components/shopping-cart/shopping-cart.component';
+import { ShoppingModule } from './shopping/shopping.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    BsNavbarComponent,
-    CheckOutComponent,
-    ProductsComponent,
-    ProductFilterComponent,
-    ShoppingCartComponent,
-    ShoppingCartSummaryComponent,
-    ShippingFormComponent,
-    MyOrdersComponent,
-  ],
+  declarations: [AppComponent, BsNavbarComponent],
   imports: [
     BrowserModule,
     SharedModule,
     AdminModule,
+    ShoppingModule,
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
