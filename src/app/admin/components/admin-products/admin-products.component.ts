@@ -1,4 +1,4 @@
-import { TableHeader } from '../../table-Header';
+import { TableHeader } from '../../../table-Header';
 import { Product } from 'shared/models/product';
 import { ProductService } from 'shared/services/product.service';
 import { Component, OnDestroy, ViewChild } from '@angular/core';

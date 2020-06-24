@@ -1,4 +1,4 @@
-import { Category } from '../../category';
+import { Category } from '../../../category';
 import { Product } from 'shared/models/product';
 import { ProductService } from 'shared/services/product.service';
 import { CategoryService } from 'shared/services/category.service';
