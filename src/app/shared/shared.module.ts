@@ -1,5 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProductCardComponent } from 'shared/components/product-card/product-card.component';
 import { ProductQuantityComponent } from 'shared/components/product-quantity/product-quantity.component';
 
@@ -13,8 +21,32 @@ import { UserService } from './services/user.service';
 
 @NgModule({
   declarations: [ProductCardComponent, ProductQuantityComponent],
-  imports: [CommonModule],
-  exports: [ProductCardComponent, ProductQuantityComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatSortModule,
+    NgbModule,
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
+    NoopAnimationsModule,
+  ],
+  exports: [
+    CommonModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatSortModule,
+    ProductCardComponent,
+    ProductQuantityComponent,
+    FormsModule,
+    ReactiveFormsModule,
+    NgbModule,
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
+    NoopAnimationsModule,
+  ],
   providers: [
     AuthService,
     AuthGuard,
