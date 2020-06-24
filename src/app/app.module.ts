@@ -1,3 +1,5 @@
+import { MyOrdersComponent } from './my-orders/my-orders.component';
+import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.component';
 import { OrderService } from './order.service';
 import { CheckOutComponent } from './check-out/check-out.component';
 import { ShoppingCartService } from './shopping-cart.service';
@@ -46,6 +48,8 @@ import { ShippingFormComponent } from './shipping-form/shipping-form.component';
     ProductQuantityComponent,
     ShoppingCartSummaryComponent,
     ShippingFormComponent,
+    AdminOrdersComponent,
+    MyOrdersComponent,
   ],
   imports: [
     BrowserModule,
