@@ -1,6 +1,6 @@
-import { TableHeader } from './../../models/table-Header';
-import { Product } from './../../models/product';
-import { ProductService } from './../../product.service';
+import { TableHeader } from '../../table-Header';
+import { Product } from 'shared/models/product';
+import { ProductService } from 'shared/services/product.service';
 import { Component, OnDestroy, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';

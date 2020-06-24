@@ -1,7 +1,7 @@
-import { Category } from './../../models/category';
-import { Product } from './../../models/product';
-import { ProductService } from './../../product.service';
-import { CategoryService } from './../../category.service';
+import { Category } from '../../category';
+import { Product } from 'shared/models/product';
+import { ProductService } from 'shared/services/product.service';
+import { CategoryService } from 'shared/services/category.service';
 import { Component, OnInit } from '@angular/core';
 import {
   FormGroup,

@@ -10,7 +10,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CheckOutComponent } from './check-out/check-out.component';
 import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.component';
-import { AuthGuard } from './auth-guard.service';
+import { AuthGuard } from 'shared/services/auth-guard.service';
 import { ProductFormComponent } from './admin/product-form/product-form.component';
 
 const routes: Routes = [

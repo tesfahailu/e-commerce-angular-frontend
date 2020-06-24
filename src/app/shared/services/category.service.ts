@@ -1,5 +1,5 @@
-import { Category } from './models/category';
-import { documentToDomainObject } from './util/documentToDomainObject';
+import { Category } from '../../category';
+import { documentToDomainObject } from '../../util/documentToDomainObject';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';

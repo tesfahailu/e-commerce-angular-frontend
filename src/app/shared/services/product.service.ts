@@ -1,5 +1,5 @@
-import { documentToDomainObject } from './util/documentToDomainObject';
-import { Product } from './models/product';
+import { documentToDomainObject } from '../../util/documentToDomainObject';
+import { Product } from 'shared/models/product';
 import { map, take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';

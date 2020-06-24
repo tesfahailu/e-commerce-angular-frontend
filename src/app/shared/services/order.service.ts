@@ -1,5 +1,5 @@
-import { ShoppingCartService } from './shopping-cart.service';
-import { Order } from './models/order';
+import { ShoppingCartService } from 'shared/services/shopping-cart.service';
+import { Order } from 'shared/models/order';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
