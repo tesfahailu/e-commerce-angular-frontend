@@ -6,6 +6,7 @@ $shop-warn: mat-palette($mat-red);
 $shop-theme: mat-light-theme($shop-primary, $shop-accent, $shop-warn);
 @include angular-material-theme($shop-theme);
 @import '~bootstrap/scss/bootstrap';
+// @import '~font-awesome/css/font-awesome.css';
 * {
   margin: 0;
 }
