@@ -27,7 +27,7 @@
     "colors": "^1.4.0",
     "dotenv": "^8.2.0",
     "firebase": "^7.14.6",
-    "firebase-tools": "^8.4.1",
+    "firebase-tools": "^12.4.3",
     "g": "^2.0.1",
     "jquery": "^3.5.1",
     "popper": "^1.0.1",
